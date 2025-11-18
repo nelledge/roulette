@@ -16,7 +16,8 @@ screen = pygame.display.set_mode((img_w,  img_h ))
 
 # Colors
 WHITE = (255, 255, 255)
-GRAY = (180, 180, 180)
+GREEN_BACKROUND = (31, 146, 17)
+DARK_GREEN = (42, 94, 36)
 DARKGRAY = (120, 120, 120)
 GREEN = (0, 200, 0)
 
@@ -26,9 +27,9 @@ font = pygame.font.SysFont(None, 40)
 def draw_button(rect, text, mouse_pos):
     # Hover effect
     if rect.collidepoint(mouse_pos):
-        color = DARKGRAY
+        color = DARK_GREEN
     else:
-        color = GRAY
+        color = GREEN_BACKROUND
 
     pygame.draw.rect(screen, color, rect, border_radius=8)
 
@@ -38,8 +39,10 @@ def draw_button(rect, text, mouse_pos):
 def main():
     running = True
 
-    inside_betts = pygame.Rect(100, 50, 200, 60)
-    outsise_betts = pygame.Rect(400, 50, 200, 60)
+    manque = pygame.Rect(481, 500, 150, 50)
+    passe = pygame.Rect(490, 170, 120, 50)
+    impair = pygame.Rect(320, 500, 150, 50)
+    pair =  pygame.Rect(320, 170, 120, 50)
 
 
     while running:
@@ -47,8 +50,10 @@ def main():
 
         screen.blit(background, (0,0))
 
-        draw_button(inside_betts, "Inside Betts", mouse_pos)
-        draw_button(outsise_betts, "Outsise Betts", mouse_pos)
+        draw_button(manque, "Manque", mouse_pos)
+        draw_button(passe, "Passe", mouse_pos)
+        draw_button(impair, "Impair", mouse_pos)
+        draw_button(pair, "Pair", mouse_pos)
 
 
         for event in pygame.event.get():
@@ -56,7 +61,7 @@ def main():
                 running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if button1.collidepoint(mouse_pos):
+                if manque.collidepoint(mouse_pos):
                     print("Button 1 clicked!")
 
         pygame.display.flip()
