@@ -25,13 +25,17 @@ DARKGRAY = (120, 120, 120)
 GREEN = (0, 200, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
+RED = (199, 21, 8) 
 
 # fonts
 fonts_outside = pygame.font.SysFont(None, 40)
 
 #Chip Fariablen 
-chip_red_cordinents = (200, 200)
-chip_radius = 30          
+blue_chip_coordinates = (200, 650)
+red_chip_coordinates = (290, 650)
+black_chip_coordinates = (290, 650)
+
+chip_radius = 15          
 # button_text = 'Click Me!'
 
 def main():
@@ -48,12 +52,13 @@ def main():
         screen.blit(background, (0,0))
 
         #Drawing the objekts
+        draw_chips(red_chip_coordinates, chip_radius, RED)
+        draw_chips(blue_chip_coordinates, chip_radius, BLUE)
 
         # draw_rect_with_text(manque, "Manque", mouse_pos)
         # draw_rect_with_text(passe, "Passe", mouse_pos)
         # draw_rect_with_text(impair, "Impair", mouse_pos)
         # draw_rect_with_text(pair, "Pair", mouse_pos)
-        draw_chips( chip_red_cordinents, chip_radius, GREEN)
 
         #Events
         for event in pygame.event.get():
@@ -65,8 +70,8 @@ def main():
                     print("Button 1 clicked!")
 
                 mouse_x, mouse_y = event.pos
-                distance = ((mouse_x - chip_red_cordinents[0]) ** 2 + 
-                            (mouse_y - chip_red_cordinents[1]) ** 2) ** 0.5
+                distance = ((mouse_x - red_chip_coordinates[0]) ** 2 + 
+                            (mouse_y - red_chip_coordinates[1]) ** 2) ** 0.5
                 
                 if distance <= chip_radius:
                     print('Button clicked!')
