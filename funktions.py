@@ -21,10 +21,28 @@ def draw_chips(entety, radius, sreen_input):
     else:
         colur = entety[3]
         pygame.draw.circle(screen, colur, center, radius)
-    # font_chip = pygame.font.SysFont(None, 36)
-    # text_surface = fonts_outside_chip.render(button_text, True, WHITE)
-    # text_rect = text_surface.get_rect(center=center)
-    # screen.blit(text_surface, text_rect)
+        drawing_sqaures_outside()
+
+
+def drawing_sqaures_outside():
+        outside_x = [193, 365, 530]  
+        outside_y = [177, 506]  
+
+        x_square = 40
+        y_square = 40
+
+        squares = [] 
+
+        for y in outside_y:          
+            for x in outside_x:      
+                points = pygame.Surface((x_square, y_square), pygame.SRCALPHA)
+                points.fill((0, 0, 255, 128))
+                screen.blit(points, (x, y))
+
+                squares.append(pygame.Rect(x, y, x_square, y_square))
+        
+        return squares
+
 
 def distens_to_sircle (entety, mouse_x, mouse_y):
     distance = ((mouse_x - entety[0]) ** 2 + 

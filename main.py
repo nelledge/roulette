@@ -54,7 +54,7 @@ def main():
 
         screen.blit(background, (0,0))
 
-        #Drawing the objekts
+        #Drawing the Chips
         draw_chips(blue_chip_coordinates_color, chip_radius, screen)
         draw_chips(red_chip_coordinates_color, chip_radius, screen)
         draw_chips(green_chip_coordinates_color, chip_radius, screen)
@@ -71,8 +71,6 @@ def main():
                 running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if manque.collidepoint(mouse_pos):
-                    print("Button 1 clicked!")
 
                 mouse_x, mouse_y = event.pos
 
@@ -80,18 +78,24 @@ def main():
                     print('Blue Chip clicked!')
                     blue_chip_coordinates_color[4] = checking_true_fals_chip(blue_chip_coordinates_color)
 
-                if distens_to_sircle(red_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                elif distens_to_sircle(red_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Red Chip clicked!')
                     red_chip_coordinates_color[4] = checking_true_fals_chip(red_chip_coordinates_color)
                 
-                if distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                elif distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Red Chip clicked!')
                     green_chip_coordinates_color[4] = checking_true_fals_chip(green_chip_coordinates_color)
                 
-                if distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                elif distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Red Chip clicked!')
                     black_chip_coordinates_color[4] = checking_true_fals_chip(black_chip_coordinates_color)
+
+
+                for i, rect in enumerate(drawing_sqaures_outside()):
+                    if rect.collidepoint(event.pos):
+                        print(f"Square {i+1} clicked!") 
         
+
         #Displaying everthing at the end
         pygame.display.flip()
 
