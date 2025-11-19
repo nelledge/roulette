@@ -23,6 +23,7 @@ GREEN_BACKROUND = (31, 146, 17)
 DARK_GREEN = (42, 94, 36)
 DARKGRAY = (120, 120, 120)
 GREEN = (0, 200, 0)
+LIGHT_GREEN = (59, 217, 66)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 RED = (199, 21, 8) 
@@ -31,9 +32,11 @@ RED = (199, 21, 8)
 fonts_outside = pygame.font.SysFont(None, 40)
 
 #Chip Fariablen 
-blue_chip_coordinates = (200, 650)
-red_chip_coordinates = (290, 650)
-black_chip_coordinates = (290, 650)
+# x , y , 1 Color , 2 Color , True or False if Clicked
+blue_chip_coordinates_color = [200, 650, BLUE, WHITE, False]
+red_chip_coordinates_color = [290, 650, RED, WHITE, False]
+green_chip_coordinates_color = [380, 650, LIGHT_GREEN, WHITE, False]
+black_chip_coordinates_color = [470, 650, BLACK, WHITE, False]
 
 chip_radius = 15          
 # button_text = 'Click Me!'
@@ -52,8 +55,10 @@ def main():
         screen.blit(background, (0,0))
 
         #Drawing the objekts
-        draw_chips(red_chip_coordinates, chip_radius, RED)
-        draw_chips(blue_chip_coordinates, chip_radius, BLUE)
+        draw_chips(blue_chip_coordinates_color, chip_radius, screen)
+        draw_chips(red_chip_coordinates_color, chip_radius, screen)
+        draw_chips(green_chip_coordinates_color, chip_radius, screen)
+        draw_chips(black_chip_coordinates_color, chip_radius, screen)
 
         # draw_rect_with_text(manque, "Manque", mouse_pos)
         # draw_rect_with_text(passe, "Passe", mouse_pos)
@@ -70,12 +75,23 @@ def main():
                     print("Button 1 clicked!")
 
                 mouse_x, mouse_y = event.pos
-                distance = ((mouse_x - red_chip_coordinates[0]) ** 2 + 
-                            (mouse_y - red_chip_coordinates[1]) ** 2) ** 0.5
-                
-                if distance <= chip_radius:
-                    print('Button clicked!')
 
+                if distens_to_sircle(blue_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Blue Chip clicked!')
+                    blue_chip_coordinates_color[4] = checking_true_fals_chip(blue_chip_coordinates_color)
+
+                if distens_to_sircle(red_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Red Chip clicked!')
+                    red_chip_coordinates_color[4] = checking_true_fals_chip(red_chip_coordinates_color)
+                
+                if distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Red Chip clicked!')
+                    green_chip_coordinates_color[4] = checking_true_fals_chip(green_chip_coordinates_color)
+                
+                if distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Red Chip clicked!')
+                    black_chip_coordinates_color[4] = checking_true_fals_chip(black_chip_coordinates_color)
+        
         #Displaying everthing at the end
         pygame.display.flip()
 
