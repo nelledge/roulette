@@ -1,5 +1,5 @@
 import pygame
-from main_visuel import *
+from main import *
 
 def draw_rect_with_text(rect, text, mouse_pos):
     # Hover effect
