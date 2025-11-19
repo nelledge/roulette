@@ -1,76 +1,101 @@
-import random
-import time
+import pygame
+import sys
 
-def getting_what_you_want_to_bet():
-        print ("What would you like to bet on?")
-        print("1 --> INSIDE BETSS")
-        print("2 --> OUTSIDE BETS")
-        print("3 --> Im done")
-        print("")
-        bet = input("What do you want to bet on: ")
-        print("")
+from funktions import *
 
-        if bet == "1": #Inside Betts
-            in_out_false = 1
-            betting_number = input("Do you want to bet on 1, 2, 4 or 6 nubers?: ")
-            if betting_number == 1:
-                 print("Numers 0 - 36")
-                 second_wave = input("--> ")
-            if betting_number == 2:
-                 print("")
-            if betting_number == 3:
-                 print("")
-            if betting_number == 4:
-                 print("")
-            if betting_number == 6:
-                 print("")
+pygame.init()
+screen = pygame.display.set_mode((1, 1))  
 
-        elif bet == "2": #Outsise Betts
-            in_out_false = 2
+# Immages 
+background = pygame.image.load("pictures/roulette_simple_text.jpg").convert_alpha()
+background = pygame.transform.scale(background, 
+                                   (background.get_width()/6,
+                                    background.get_height()/6))
 
-            print("1 --> Red")
-            print("2 --> Black")
-            print("3 --> Odd")
-            print("4 --> Even")
-            print("5 --> Low")
-            print("6 --> High")
-            print("7 --> 1. Dozens(1-12)")
-            print("8 --> 2. Dozens(13 - 24)")
-            print("9 --> 3. Dozens(25 - 36)")
-            print("10 --> 1. Column")
-            print("11 --> 2. Column")
-            print("12 --> 3. Column")
-            print("")
-            second_wave = input("What do you want to bet on: ")            
+# Backround
+img_w = background.get_width()
+img_h = background.get_height()
+screen = pygame.display.set_mode((img_w,  img_h ))
 
-        elif bet == "3":
-            in_out_false = 3
-            # betting = False
-            # balnce = 0
+# Colors
+WHITE = (255, 255, 255)
+GREEN_BACKROUND = (31, 146, 17)
+DARK_GREEN = (42, 94, 36)
+DARKGRAY = (120, 120, 120)
+GREEN = (0, 200, 0)
+LIGHT_GREEN = (59, 217, 66)
+BLUE = (0, 0, 255)
+BLACK = (0, 0, 0)
+RED = (199, 21, 8) 
 
-        else:
-            print("Wrong input, only 1, 2 or 3")
+# fonts
+fonts_outside = pygame.font.SysFont(None, 40)
 
-        return in_out_false, second_wave
+#Chip Fariablen 
+# x , y , 1 Color , 2 Color , True or False if Clicked
+blue_chip_coordinates_color = [200, 650, BLUE, WHITE, False]
+red_chip_coordinates_color = [290, 650, RED, WHITE, False]
+green_chip_coordinates_color = [380, 650, LIGHT_GREEN, WHITE, False]
+black_chip_coordinates_color = [470, 650, BLACK, WHITE, False]
 
+chip_radius = 15          
+# button_text = 'Click Me!'
 
-balnce = 1000
+def main():
+    running = True
 
-while balnce > 0:
+    manque = pygame.Rect(481, 500, 150, 50)
+    passe = pygame.Rect(490, 170, 120, 50)
+    impair = pygame.Rect(320, 500, 150, 50)
+    pair =  pygame.Rect(320, 170, 120, 50)
 
-    betting = True
-    while betting == True:
-        random_number = random.randint(0, 36)
+    while running:
+        mouse_pos = pygame.mouse.get_pos()
 
-        in_out_false, second_wave = getting_what_you_want_to_bet()
+        screen.blit(background, (0,0))
 
-        if in_out_false == "3":
-             betting = False
+        #Drawing the objekts
+        draw_chips(blue_chip_coordinates_color, chip_radius, screen)
+        draw_chips(red_chip_coordinates_color, chip_radius, screen)
+        draw_chips(green_chip_coordinates_color, chip_radius, screen)
+        draw_chips(black_chip_coordinates_color, chip_radius, screen)
 
-        print(f"Your Nuber --> {in_out_false}")
+        # draw_rect_with_text(manque, "Manque", mouse_pos)
+        # draw_rect_with_text(passe, "Passe", mouse_pos)
+        # draw_rect_with_text(impair, "Impair", mouse_pos)
+        # draw_rect_with_text(pair, "Pair", mouse_pos)
 
+        #Events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if manque.collidepoint(mouse_pos):
+                    print("Button 1 clicked!")
+
+                mouse_x, mouse_y = event.pos
+
+                if distens_to_sircle(blue_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Blue Chip clicked!')
+                    blue_chip_coordinates_color[4] = checking_true_fals_chip(blue_chip_coordinates_color)
+
+                if distens_to_sircle(red_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Red Chip clicked!')
+                    red_chip_coordinates_color[4] = checking_true_fals_chip(red_chip_coordinates_color)
+                
+                if distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Red Chip clicked!')
+                    green_chip_coordinates_color[4] = checking_true_fals_chip(green_chip_coordinates_color)
+                
+                if distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
+                    print('Red Chip clicked!')
+                    black_chip_coordinates_color[4] = checking_true_fals_chip(black_chip_coordinates_color)
         
+        #Displaying everthing at the end
+        pygame.display.flip()
 
+    pygame.quit()
 
-    print(random_number)
-        
+if __name__ == "__main__":
+    main()
