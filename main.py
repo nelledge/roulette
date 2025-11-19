@@ -32,22 +32,27 @@ RED = (199, 21, 8)
 fonts_outside = pygame.font.SysFont(None, 40)
 
 #Chip Fariablen 
-# x , y , 1 Color , 2 Color , True or False if Clicked
-blue_chip_coordinates_color = [200, 650, BLUE, WHITE, False]
-red_chip_coordinates_color = [290, 650, RED, WHITE, False]
-green_chip_coordinates_color = [380, 650, LIGHT_GREEN, WHITE, False]
-black_chip_coordinates_color = [470, 650, BLACK, WHITE, False]
+"""
+0 --> x 
+1 --> y 
+2 --> 1 Color 
+3 --> 2 Color 
+4 --> True or False if Clicked
+5 --> radius
+6 --> Value of chip
+"""
+
+blue_chip_coordinates_color = [200, 650, BLUE, WHITE, False, 15, 5]
+red_chip_coordinates_color = [290, 650, RED, WHITE, False, 15, 10]
+green_chip_coordinates_color = [380, 650, LIGHT_GREEN, WHITE, False, 15, 20]
+black_chip_coordinates_color = [470, 650, BLACK, WHITE, False, 15, 50]
 
 chip_radius = 15          
 # button_text = 'Click Me!'
+list_of_placed_cips = []
 
 def main():
     running = True
-
-    manque = pygame.Rect(481, 500, 150, 50)
-    passe = pygame.Rect(490, 170, 120, 50)
-    impair = pygame.Rect(320, 500, 150, 50)
-    pair =  pygame.Rect(320, 170, 120, 50)
 
     while running:
         mouse_pos = pygame.mouse.get_pos()
@@ -55,15 +60,12 @@ def main():
         screen.blit(background, (0,0))
 
         #Drawing the Chips
-        draw_chips(blue_chip_coordinates_color, chip_radius, screen)
-        draw_chips(red_chip_coordinates_color, chip_radius, screen)
-        draw_chips(green_chip_coordinates_color, chip_radius, screen)
-        draw_chips(black_chip_coordinates_color, chip_radius, screen)
+        draw_chips(blue_chip_coordinates_color)
+        draw_chips(red_chip_coordinates_color)
+        draw_chips(green_chip_coordinates_color)
+        draw_chips(black_chip_coordinates_color)
 
-        # draw_rect_with_text(manque, "Manque", mouse_pos)
-        # draw_rect_with_text(passe, "Passe", mouse_pos)
-        # draw_rect_with_text(impair, "Impair", mouse_pos)
-        # draw_rect_with_text(pair, "Pair", mouse_pos)
+        changing_chip_outside_square(list_of_placed_cips)
 
         #Events
         for event in pygame.event.get():
@@ -77,24 +79,38 @@ def main():
                 if distens_to_sircle(blue_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Blue Chip clicked!')
                     blue_chip_coordinates_color[4] = checking_true_fals_chip(blue_chip_coordinates_color)
+                    color_pushed = blue_chip_coordinates_color
 
                 elif distens_to_sircle(red_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Red Chip clicked!')
                     red_chip_coordinates_color[4] = checking_true_fals_chip(red_chip_coordinates_color)
+                    color_pushed = red_chip_coordinates_color
                 
                 elif distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
-                    print('Red Chip clicked!')
+                    print('Green Chip clicked!')
                     green_chip_coordinates_color[4] = checking_true_fals_chip(green_chip_coordinates_color)
+                    color_pushed = green_chip_coordinates_color
                 
                 elif distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
-                    print('Red Chip clicked!')
+                    print('Black Chip clicked!')
                     black_chip_coordinates_color[4] = checking_true_fals_chip(black_chip_coordinates_color)
+                    color_pushed = black_chip_coordinates_color
 
 
                 for i, rect in enumerate(drawing_sqaures_outside()):
                     if rect.collidepoint(event.pos):
-                        print(f"Square {i+1} clicked!") 
-        
+
+                        mouse_placment = (mouse_x, mouse_y, color_pushed) 
+                        list_of_placed_cips.append(mouse_placment)
+
+                        print(f"Square {i+1} clicked!")
+                        print(mouse_placment)
+
+                        # Resetting all the chip colors 
+                        blue_chip_coordinates_color[4] = False
+                        red_chip_coordinates_color[4] = False
+                        green_chip_coordinates_color[4] = False
+                        black_chip_coordinates_color[4] = False
 
         #Displaying everthing at the end
         pygame.display.flip()
