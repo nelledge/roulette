@@ -1,15 +1,18 @@
 import pygame
 import sys
 
-pygame.init()
+from funktions import *
 
+pygame.init()
 screen = pygame.display.set_mode((1, 1))  
 
-background = pygame.image.load("pictures/roulette_simple.jpg").convert_alpha()
+# Immages 
+background = pygame.image.load("pictures/roulette_simple_text.jpg").convert_alpha()
 background = pygame.transform.scale(background, 
                                    (background.get_width()/6,
                                     background.get_height()/6))
 
+# Backround
 img_w = background.get_width()
 img_h = background.get_height()
 screen = pygame.display.set_mode((img_w,  img_h ))
@@ -20,21 +23,16 @@ GREEN_BACKROUND = (31, 146, 17)
 DARK_GREEN = (42, 94, 36)
 DARKGRAY = (120, 120, 120)
 GREEN = (0, 200, 0)
+BLUE = (0, 0, 255)
+BLACK = (0, 0, 0)
 
-# Font
-font = pygame.font.SysFont(None, 40)
+# fonts
+fonts_outside = pygame.font.SysFont(None, 40)
 
-def draw_button(rect, text, mouse_pos):
-    # Hover effect
-    if rect.collidepoint(mouse_pos):
-        color = DARK_GREEN
-    else:
-        color = GREEN_BACKROUND
-
-    pygame.draw.rect(screen, color, rect, border_radius=8)
-
-    label = font.render(text, True, WHITE)
-    screen.blit(label, (rect.x + 20, rect.y + 10))
+#Chip Fariablen 
+chip_red_cordinents = (200, 200)
+chip_radius = 30          
+# button_text = 'Click Me!'
 
 def main():
     running = True
@@ -44,18 +42,20 @@ def main():
     impair = pygame.Rect(320, 500, 150, 50)
     pair =  pygame.Rect(320, 170, 120, 50)
 
-
     while running:
         mouse_pos = pygame.mouse.get_pos()
 
         screen.blit(background, (0,0))
 
-        draw_button(manque, "Manque", mouse_pos)
-        draw_button(passe, "Passe", mouse_pos)
-        draw_button(impair, "Impair", mouse_pos)
-        draw_button(pair, "Pair", mouse_pos)
+        #Drawing the objekts
 
+        # draw_rect_with_text(manque, "Manque", mouse_pos)
+        # draw_rect_with_text(passe, "Passe", mouse_pos)
+        # draw_rect_with_text(impair, "Impair", mouse_pos)
+        # draw_rect_with_text(pair, "Pair", mouse_pos)
+        draw_chips( chip_red_cordinents, chip_radius, GREEN)
 
+        #Events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -64,6 +64,14 @@ def main():
                 if manque.collidepoint(mouse_pos):
                     print("Button 1 clicked!")
 
+                mouse_x, mouse_y = event.pos
+                distance = ((mouse_x - chip_red_cordinents[0]) ** 2 + 
+                            (mouse_y - chip_red_cordinents[1]) ** 2) ** 0.5
+                
+                if distance <= chip_radius:
+                    print('Button clicked!')
+
+        #Displaying everthing at the end
         pygame.display.flip()
 
     pygame.quit()
