@@ -19,14 +19,21 @@ screen = pygame.display.set_mode((img_w,  img_h ))
 
 # Colors
 WHITE = (255, 255, 255)
+
 GREEN_BACKROUND = (31, 146, 17)
 DARK_GREEN = (42, 94, 36)
-DARKGRAY = (120, 120, 120)
 GREEN = (0, 200, 0)
 LIGHT_GREEN = (59, 217, 66)
+
+DARK_GRAY = (120, 120, 120)
+GRAY = (99, 95, 82)
+
 BLUE = (0, 0, 255)
+
 BLACK = (0, 0, 0)
-RED = (199, 21, 8) 
+
+RED = (199, 21, 8)
+RED_GRAY = (201, 75, 75) 
 
 # fonts
 fonts_outside = pygame.font.SysFont(None, 40)
@@ -43,15 +50,17 @@ fonts_outside = pygame.font.SysFont(None, 40)
 """
 
 blue_chip_coordinates_color = [200, 650, BLUE, WHITE, False, 15, 5]
-red_chip_coordinates_color = [290, 650, RED, WHITE, False, 15, 10]
+red_chip_coordinates_color = [290, 650, RED_GRAY, WHITE, False, 15, 10]
 green_chip_coordinates_color = [380, 650, LIGHT_GREEN, WHITE, False, 15, 20]
-black_chip_coordinates_color = [470, 650, BLACK, WHITE, False, 15, 50]
+black_chip_coordinates_color = [470, 650, GRAY, WHITE, False, 15, 50]
 
 chip_radius = 15          
 # button_text = 'Click Me!'
 list_of_placed_cips = []
 
 def main():
+    betting_amount = 0
+
     running = True
 
     while running:
@@ -65,7 +74,9 @@ def main():
         draw_chips(green_chip_coordinates_color)
         draw_chips(black_chip_coordinates_color)
 
-        changing_chip_outside_square(list_of_placed_cips)
+        drawing_chips_on_square_outside(list_of_placed_cips) 
+
+        showing_betting_amount(betting_amount) 
 
         #Events
         for event in pygame.event.get():
@@ -80,21 +91,36 @@ def main():
                     print('Blue Chip clicked!')
                     blue_chip_coordinates_color[4] = checking_true_fals_chip(blue_chip_coordinates_color)
                     color_pushed = blue_chip_coordinates_color
+                    red_chip_coordinates_color[4] = False
+                    green_chip_coordinates_color[4] = False
+                    black_chip_coordinates_color[4] = False
 
                 elif distens_to_sircle(red_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Red Chip clicked!')
                     red_chip_coordinates_color[4] = checking_true_fals_chip(red_chip_coordinates_color)
                     color_pushed = red_chip_coordinates_color
+                    blue_chip_coordinates_color[4] = False
+                    green_chip_coordinates_color[4] = False
+                    black_chip_coordinates_color[4] = False
+
                 
                 elif distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Green Chip clicked!')
                     green_chip_coordinates_color[4] = checking_true_fals_chip(green_chip_coordinates_color)
                     color_pushed = green_chip_coordinates_color
+                    blue_chip_coordinates_color[4] = False
+                    red_chip_coordinates_color[4] = False
+                    black_chip_coordinates_color[4] = False
+
                 
                 elif distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Black Chip clicked!')
                     black_chip_coordinates_color[4] = checking_true_fals_chip(black_chip_coordinates_color)
                     color_pushed = black_chip_coordinates_color
+                    blue_chip_coordinates_color[4] = False
+                    red_chip_coordinates_color[4] = False
+                    green_chip_coordinates_color[4] = False
+
 
 
                 for i, rect in enumerate(drawing_sqaures_outside()):
@@ -105,6 +131,8 @@ def main():
 
                         print(f"Square {i+1} clicked!")
                         print(mouse_placment)
+
+                        betting_amount += color_pushed[6]
 
                         # Resetting all the chip colors 
                         blue_chip_coordinates_color[4] = False

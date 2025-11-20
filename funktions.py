@@ -25,11 +25,10 @@ def draw_chips(entety):
 
     pygame.draw.circle(screen, colur, center, radius)
 
-    # Draw number 50 in the center
-    font = pygame.font.SysFont(None, 30)  # 40 = font size, adjust as you like
+    font_chip = pygame.font.SysFont(None, 30)  
 
     text_chip = str(entety[6]) #Turning int into sring because pygame needs that, for some reson :| 
-    text = font.render(text_chip, True, WHITE)  # white text
+    text = font_chip.render(text_chip, True, WHITE)  
 
     text_rect = text.get_rect(center=center)
     screen.blit(text, text_rect)
@@ -39,26 +38,38 @@ def draw_chips(entety):
         drawing_sqaures_outside()
 
 
-def changing_chip_outside_square(list_of_placed_cips): 
+def drawing_chips_on_square_outside(list_of_placed_cips): 
     # list_of_placed_cips has the x, y and the entety of the last pushed chip
 
     for x, y, color in list_of_placed_cips:
         pygame.draw.circle(screen, color[2], (x, y), color[5])
 
+        font_chip = pygame.font.SysFont(None, 30)  
+
+        text_chip = str(color[6]) #Turning int into sring because pygame needs that, for some reson :| 
+        text = font_chip.render(text_chip, True, WHITE)  
+
+        text_rect = text.get_rect(center=(x, y))
+        screen.blit(text, text_rect)
 
 def drawing_sqaures_outside():
-        outside_x = [193, 365, 530]  
-        outside_y = [177, 506]  
+        #for x, y = 40
+        # outside_x = [193, 365, 530]  
+        # outside_y = [177, 506]  
 
-        x_square = 40
-        y_square = 40
+        #for x,y = 120
+        outside_x = [160, 325, 495]  
+        outside_y = [137, 467]  
+
+        x_square = 120
+        y_square = 120
 
         squares = [] 
 
         for y in outside_y:          
             for x in outside_x:      
                 points = pygame.Surface((x_square, y_square), pygame.SRCALPHA)
-                points.fill((0, 0, 255, 128))
+                points.fill((0, 0, 255, 50))
                 screen.blit(points, (x, y))
 
                 squares.append(pygame.Rect(x, y, x_square, y_square))
@@ -76,3 +87,7 @@ def checking_true_fals_chip (entety):
     else:
         return False
 
+def showing_betting_amount (amount):
+    font = pygame.font.SysFont(None, 30)
+    text_surface = font.render((f"{amount}€"), True, BLACK)
+    screen.blit(text_surface, (50, 50))
