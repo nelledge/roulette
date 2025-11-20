@@ -140,6 +140,25 @@ def main():
                         green_chip_coordinates_color[4] = False
                         black_chip_coordinates_color[4] = False
 
+                for i, rect in enumerate(drawing_sqaures_inside()):
+                    if rect.collidepoint(event.psos):
+
+                        mouse_placment = (mouse_x, mouse_y, color_pushed) 
+                        list_of_placed_cips.append(mouse_placment)
+
+                        print(f"Square {i+1} clicked!")
+                        print(mouse_placment)
+
+                        betting_amount += color_pushed[6]
+
+                        # Resetting all the chip colors 
+                        blue_chip_coordinates_color[4] = False
+                        red_chip_coordinates_color[4] = False
+                        green_chip_coordinates_color[4] = False
+                        black_chip_coordinates_color[4] = False
+                    
+                    
+
         #Displaying everthing at the end
         pygame.display.flip()
 

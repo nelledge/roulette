@@ -36,6 +36,7 @@ def draw_chips(entety):
     # If entety[4] is True, also draw squares outside
     if entety[4] == True:
         drawing_sqaures_outside()
+        drawing_sqaures_inside()
 
 
 def drawing_chips_on_square_outside(list_of_placed_cips): 
@@ -60,21 +61,38 @@ def drawing_sqaures_outside():
         #for x,y = 120
         outside_x = [160, 325, 495]  
         outside_y = [137, 467]  
+        x_square_outside = 120
+        y_square_outside = 120
 
-        x_square = 120
-        y_square = 120
-
-        squares = [] 
+        squares_outside = [] 
 
         for y in outside_y:          
             for x in outside_x:      
-                points = pygame.Surface((x_square, y_square), pygame.SRCALPHA)
+                points = pygame.Surface((x_square_outside, y_square_outside), pygame.SRCALPHA)
                 points.fill((0, 0, 255, 50))
                 screen.blit(points, (x, y))
 
-                squares.append(pygame.Rect(x, y, x_square, y_square))
+                squares_outside.append(pygame.Rect(x, y, x_square_outside, y_square_outside))
         
-        return squares
+        return squares_outside
+
+def drawing_sqaures_inside():
+        inside_x = [623, 580,537,494,451,406, 361, 320, 275, 230, 185, 145]
+        inside_y = [290, 355, 420]
+        x_square_inside = 15
+        y_square_inside = 15
+        
+        squares_inside = [] 
+        
+        for x in inside_x:          
+            for y in inside_y:      
+                points = pygame.Surface((x_square_inside, y_square_inside), pygame.SRCALPHA)
+                points.fill((0, 0, 255, 100))
+                screen.blit(points, (x, y))
+
+                squares_inside.append(pygame.Rect(x, y, x_square_inside, y_square_inside))
+        
+        return squares_inside
 
 def distens_to_sircle (entety, mouse_x, mouse_y):
     distance = ((mouse_x - entety[0]) ** 2 + 
