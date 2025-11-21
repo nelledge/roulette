@@ -72,7 +72,9 @@ def main():
         mouse_pos = pygame.mouse.get_pos()
 
         screen.blit(background, (0,0))
-        screen.blit(image_roulette, (300, 300))
+        screen.blit(image_roulette, (820, 100))
+        wheel_rect = image_roulette.get_rect(topleft=(820, 100))
+
 
         #Drawing the Chips
         draw_chips(blue_chip_coordinates_color)
@@ -108,7 +110,6 @@ def main():
                     blue_chip_coordinates_color[4] = False
                     green_chip_coordinates_color[4] = False
                     black_chip_coordinates_color[4] = False
-
                 
                 elif distens_to_sircle(green_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Green Chip clicked!')
@@ -117,8 +118,7 @@ def main():
                     blue_chip_coordinates_color[4] = False
                     red_chip_coordinates_color[4] = False
                     black_chip_coordinates_color[4] = False
-
-                
+           
                 elif distens_to_sircle(black_chip_coordinates_color, mouse_x, mouse_y) <= chip_radius:
                     print('Black Chip clicked!')
                     black_chip_coordinates_color[4] = checking_true_fals_chip(black_chip_coordinates_color)
@@ -127,7 +127,8 @@ def main():
                     red_chip_coordinates_color[4] = False
                     green_chip_coordinates_color[4] = False
 
-
+                elif wheel_rect.collidepoint(mouse_pos):
+                    print("Wheel clicked!")
 
                 for i, rect in enumerate(drawing_sqaures_outside()):
                     if rect.collidepoint(event.pos):
@@ -162,8 +163,7 @@ def main():
                         red_chip_coordinates_color[4] = False
                         green_chip_coordinates_color[4] = False
                         black_chip_coordinates_color[4] = False
-                    
-                    
+                
 
         #Displaying everthing at the end
         pygame.display.flip()
