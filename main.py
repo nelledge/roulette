@@ -12,6 +12,11 @@ background = pygame.transform.scale(background,
                                    (background.get_width()/6,
                                     background.get_height()/6))
 
+image_roulette = pygame.image.load("pictures/wheel.png").convert_alpha()
+image_roulette = pygame.transform.scale(image_roulette, 
+                                    (image_roulette.get_width()/2, 
+                                     image_roulette.get_height()/2))
+
 # Backround
 img_w = background.get_width()
 img_h = background.get_height()
@@ -67,6 +72,7 @@ def main():
         mouse_pos = pygame.mouse.get_pos()
 
         screen.blit(background, (0,0))
+        screen.blit(image_roulette, (300, 300))
 
         #Drawing the Chips
         draw_chips(blue_chip_coordinates_color)

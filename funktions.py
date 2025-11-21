@@ -109,3 +109,6 @@ def showing_betting_amount (amount):
     font = pygame.font.SysFont(None, 30)
     text_surface = font.render((f"{amount}€"), True, BLACK)
     screen.blit(text_surface, (50, 50))
+
+def routating_roulette ():
+    pass
