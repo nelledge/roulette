@@ -72,7 +72,7 @@ def main():
         mouse_pos = pygame.mouse.get_pos()
 
         screen.blit(background, (0,0))
-        screen.blit(image_roulette, (820, 100))
+        screen.blit(image_roulette, (820, 180))
         wheel_rect = image_roulette.get_rect(topleft=(820, 100))
 
 
