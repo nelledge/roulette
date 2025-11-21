@@ -141,7 +141,7 @@ def main():
                         black_chip_coordinates_color[4] = False
 
                 for i, rect in enumerate(drawing_sqaures_inside()):
-                    if rect.collidepoint(event.psos):
+                    if rect.collidepoint(event.pos):
 
                         mouse_placment = (mouse_x, mouse_y, color_pushed) 
                         list_of_placed_cips.append(mouse_placment)
