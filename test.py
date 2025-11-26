@@ -6,7 +6,6 @@ WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
-# ⬇️ your image here
 image = pygame.image.load("pictures/wheel.png").convert_alpha()
 
 angle = 0
