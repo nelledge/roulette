@@ -4,7 +4,7 @@ from main import *
 def draw_rect_with_text(rect, text, mouse_pos):
     # Hover effect
     if rect.collidepoint(mouse_pos):
-        color = DARK_GREEN
+        color = DARK_GREEN 
     else:
         color = GREEN_BACKROUND
 
@@ -110,5 +110,14 @@ def showing_betting_amount (amount):
     text_surface = font.render((f"{amount}€"), True, BLACK)
     screen.blit(text_surface, (50, 50))
 
-def routating_roulette ():
-    pass
+def rotating_roulette(image, center_pos, clock, angle):
+
+    rotated = pygame.transform.rotozoom(image, angle, 1)
+
+    rect = rotated.get_rect(center=center_pos)
+
+    screen.blit(rotated, rect)
+
+    clock.tick(100)
+
+    print("rect center =", rect.center)

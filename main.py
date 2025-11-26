@@ -63,10 +63,13 @@ chip_radius = 15
 # button_text = 'Click Me!'
 list_of_placed_cips = []
 
+clock = pygame.time.Clock()
+
 def main():
     betting_amount = 0
-
+    turning = False
     running = True
+    angle = 0
 
     while running:
         mouse_pos = pygame.mouse.get_pos()
@@ -85,6 +88,9 @@ def main():
         drawing_chips_on_square_outside(list_of_placed_cips) 
 
         showing_betting_amount(betting_amount) 
+
+        if turning == True:
+            rotating_roulette (image_roulette, (1011, 370), clock, angle)
 
         #Events
         for event in pygame.event.get():
@@ -129,6 +135,9 @@ def main():
 
                 elif wheel_rect.collidepoint(mouse_pos):
                     print("Wheel clicked!")
+                    angle = 0
+                    turning = not turning
+                    
 
                 for i, rect in enumerate(drawing_sqaures_outside()):
                     if rect.collidepoint(event.pos):
@@ -166,6 +175,7 @@ def main():
                 
 
         #Displaying everthing at the end
+        angle += 2
         pygame.display.flip()
 
     pygame.quit()
